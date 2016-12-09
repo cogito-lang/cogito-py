@@ -18,12 +18,12 @@ class CgBuf(ctypes.Structure):
 
 # int cg_to_json
 cg_to_json = _mod.cg_to_json
-cg_to_json.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p )
+cg_to_json.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p)
 cg_to_json.restype = ctypes.c_int
 
 # int cg_to_iam
 cg_to_iam = _mod.cg_to_iam
-cg_to_iam.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p )
+cg_to_iam.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p)
 cg_to_iam.restype = ctypes.c_int
 
 # cg_buf_t* cg_buf_build(void);
@@ -40,18 +40,20 @@ cg_buf_free.restype = None
 def to_iam(args):
     buf = cg_buf_build()
     if cg_to_iam(buf, args) != 0:
-      raise CogitoError("IAM conversion failed")
+        raise CogitoError("IAM conversion failed")
     response = buf.contents.content
     cg_buf_free(buf)
     return response
 
+
 def to_json(args):
     buf = cg_buf_build()
     if cg_to_json(buf, args) != 0:
-      raise CogitoError("JSON conversion failed")
+        raise CogitoError("JSON conversion failed")
     response = buf.contents.content
     cg_buf_free(buf)
     return response
+
 
 class CogitoError(Exception):
     pass
