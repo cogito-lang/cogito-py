@@ -7,10 +7,11 @@ import cogito
 
 
 class CogitoCheck(unittest.TestCase):
+
     def setUp(self):
-      self.base_path = os.path.dirname(__file__)
-      self.iam_file = '{}/files/test.iam'.format(self.base_path)
-      self.json_file = '{}/files/test.json'.format(self.base_path)
+        self.base_path = os.path.dirname(__file__)
+        self.iam_file = '{}/files/test.iam'.format(self.base_path)
+        self.json_file = '{}/files/test.json'.format(self.base_path)
 
     def test_cogito_to_json(self):
         with open(self.iam_file) as iam:

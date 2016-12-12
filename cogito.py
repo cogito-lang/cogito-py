@@ -11,6 +11,8 @@ _mod = ctypes.cdll.LoadLibrary(_path)
 #   size_t capacity;
 #   char *content;
 # } cg_buf_t;
+
+
 class CgBuf(ctypes.Structure):
     _fields_ = [('length', ctypes.c_size_t),
                 ('capacity', ctypes.c_size_t),
