@@ -4,3 +4,4 @@ install:
 - FILE=$(mktemp)
 - wget 'https://s3.amazonaws.com/public.localytics/artifacts/cogito/libcogito_0.0.1-1_amd64.deb' -qO $FILE
 - sudo dpkg -i $FILE && rm $FILE
+script: pytest
