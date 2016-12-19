@@ -30,7 +30,7 @@ ON
 
 ## Development
 
-To run tests, run `pytest`.
+To run tests, run `python test/cogito_test.py`.
 
 ## Contributing
 
