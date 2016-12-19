@@ -2,8 +2,9 @@
 import ctypes
 from ctypes.util import find_library
 
-
 _path = find_library('libcogito')
+print _path
+
 _mod = ctypes.cdll.LoadLibrary(_path)
 
 # typedef struct cg_buf {
@@ -11,7 +12,6 @@ _mod = ctypes.cdll.LoadLibrary(_path)
 #   size_t capacity;
 #   char *content;
 # } cg_buf_t;
-
 
 class CgBuf(ctypes.Structure):
     _fields_ = [('length', ctypes.c_size_t),
@@ -38,7 +38,6 @@ cg_buf_free = _mod.cg_buf_free
 cg_buf_free.argtypes = (ctypes.POINTER(CgBuf), )
 cg_buf_free.restype = None
 
-
 def to_iam(args):
     buf = cg_buf_build()
     if cg_to_iam(buf, args) != 0:
@@ -47,7 +46,6 @@ def to_iam(args):
     cg_buf_free(buf)
     return response
 
-
 def to_json(args):
     buf = cg_buf_build()
     if cg_to_json(buf, args) != 0:
@@ -55,7 +53,6 @@ def to_json(args):
     response = buf.contents.content
     cg_buf_free(buf)
     return response
-
 
 class CogitoError(Exception):
     pass
