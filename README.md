@@ -28,7 +28,7 @@ ON
 
 ## Development
 
-To run tests, run `python test/cogito_test.py`.
+To run tests, run `pytest`.
 
 ## Contributing
 
