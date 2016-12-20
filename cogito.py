@@ -3,8 +3,11 @@ import os
 import ctypes
 from ctypes.util import find_library
 
+if os.getenv('COGITO_PATH') is None:
+    _path = find_library('cogito')
+else:
+    _path = os.environ['COGITO_PATH']
 
-_path = find_library('cogito')
 if _path is None:
     message = "libcogito is missing from your system. " \
         "Please install by running the following steps:\n"

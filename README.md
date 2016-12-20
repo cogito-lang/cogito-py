@@ -28,6 +28,14 @@ ON
   b;
 ```
 
+If your `libcogito` library is in a non-standard location, you should set the `COGITO_PATH` environment variable before you import the `cogito` module.
+
+```python
+import os
+os.environ['COGITO_PATH'] = os.path.join(os.getcwd(), 'local', 'lib', 'libcogito.so')
+import cogito
+```
+
 ## Development
 
 To run tests, run `python test/cogito_test.py`.
