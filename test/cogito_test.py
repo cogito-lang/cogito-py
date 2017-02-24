@@ -16,12 +16,15 @@ class CogitoCheck(unittest.TestCase):
     def test_cogito_to_json(self):
         with open(self.iam_file) as iam:
             with open(self.json_file) as json:
-                self.assertEqual(cogito.to_json(iam.read()), json.read())
+                actual = cogito.to_json(iam.read(), { 'value1': 'alpha', 'value2': 'mu' })
+                self.assertEqual(actual, json.read())
 
     def test_cogito_to_iam(self):
         with open(self.iam_file) as iam:
+            expected = iam.read().replace('${value1}', 'alpha').replace('${value2}', 'mu')
+
             with open(self.json_file) as json:
-                self.assertEqual(cogito.to_iam(json.read()), iam.read())
+                self.assertEqual(cogito.to_iam(json.read()), expected)
 
     def test_error(self):
         with self.assertRaises(cogito.CogitoError):

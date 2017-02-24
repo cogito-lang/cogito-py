@@ -1,5 +1,5 @@
 ALLOW
-  alpha,
+  ${value1},
   beta,
   gamma
 ON
@@ -15,6 +15,6 @@ ON
   lambda;
 
 ALLOW
-  mu
+  ${value2}
 ON
   nu;
