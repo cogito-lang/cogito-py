@@ -1,6 +1,6 @@
 # cogito-py
 
-[![Build Status](https://travis-ci.com/localytics/cogito-py.svg?token=kQUiABmGkzyHdJdMnCnv&branch=master)](https://travis-ci.com/localytics/cogito-py)
+[![Build Status](https://travis-ci.org/localytics/cogito-py.svg?branch=master)](https://travis-ci.org/localytics/cogito-py)
 
 A tiny python library that links against [libcogito](https://github.com/localytics/libcogito).
 
