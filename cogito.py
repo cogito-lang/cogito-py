@@ -13,7 +13,7 @@ if _path is None:
         "Please install by running the following steps:\n"
     if os.popen('uname').read().strip() == 'Darwin':
         message += """
-    $ brew tap localytics/formulae git@github.com:localytics/homebrew-formulae
+    $ brew tap localytics/formulae
     $ brew install cogito
 """
     else:
