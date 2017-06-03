@@ -39,7 +39,14 @@ import cogito
 
 ## Development
 
-To run tests, run `python test/cogito_test.py`.
+To run tests, run `py.test`. To release a new version:
+
+```sh
+pip install twine
+python setup.py sdist
+python setup.py bdist_wheel --universal
+twine upload dist/*
+```
 
 ## Contributing
 
