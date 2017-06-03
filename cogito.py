@@ -19,7 +19,7 @@ if _path is None:
     else:
         message += """
     $ FILE=$(mktemp)
-    $ wget 'https://s3.amazonaws.com/public.localytics/artifacts/libcogito_0.0.1-1_amd64.deb' -qO $FILE
+    $ wget 'https://s3.amazonaws.com/public.localytics/artifacts/libcogito_0.2.0-1_amd64.deb' -qO $FILE
     $ sudo dpkg -i $FILE && rm $FILE
 """  # noqa
     raise NameError(message)
