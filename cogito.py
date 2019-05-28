@@ -28,7 +28,7 @@ if COGITO_PATH is None:
     raise NameError(message)
 
 
-class CgBuf(ctypes.Structure):
+class CogitoBuffer(ctypes.Structure):
     """
     A ctypes structure that wraps the cg_buf struct from libcogito
 
@@ -43,47 +43,49 @@ class CgBuf(ctypes.Structure):
                 ("content", ctypes.c_char_p), ]
 
 
+class CogitoError(Exception):
+    pass
+
+
 COGITO = ctypes.cdll.LoadLibrary(COGITO_PATH)
 
-# int cg_to_json
-COGITO.cg_to_json.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p)
+# int cg_to_json(cg_buf_t *buffer, char *str);
+COGITO.cg_to_json.argtypes = (ctypes.POINTER(CogitoBuffer), ctypes.c_char_p)
 COGITO.cg_to_json.restype = ctypes.c_int
 
-# int cg_to_iam
-COGITO.cg_to_iam.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p)
+# int cg_to_iam(cg_buf_t *buffer, char *str);
+COGITO.cg_to_iam.argtypes = (ctypes.POINTER(CogitoBuffer), ctypes.c_char_p)
 COGITO.cg_to_iam.restype = ctypes.c_int
 
 # cg_buf_t* cg_buf_build(void);
 COGITO.cg_buf_build.argtypes = None
-COGITO.cg_buf_build.restype = ctypes.POINTER(CgBuf)
+COGITO.cg_buf_build.restype = ctypes.POINTER(CogitoBuffer)
 
 # void cg_buf_free(cg_buf_t *buffer);
-COGITO.cg_buf_free.argtypes = (ctypes.POINTER(CgBuf), )
+COGITO.cg_buf_free.argtypes = (ctypes.POINTER(CogitoBuffer), )
 COGITO.cg_buf_free.restype = None
 
 
-def to_iam(args):
-    buf = COGITO.cg_buf_build()
-    if COGITO.cg_to_iam(buf, ctypes.c_char_p(args.encode("utf-8"))) != 0:
+def to_iam(content):
+    buffer = COGITO.cg_buf_build()
+    if COGITO.cg_to_iam(buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
         raise CogitoError("IAM conversion failed")
 
-    response = buf.contents.content.decode("utf-8")
-    COGITO.cg_buf_free(buf)
+    response = buffer.contents.content.decode("utf-8")
+    COGITO.cg_buf_free(buffer)
+
     return response
 
 
-def to_json(args, subs=None):
-    for key, value in (subs or {}).items():
-        args = args.replace("${{{}}}".format(key), value)
+def to_json(content, substitutions=None):
+    for key, value in (substitutions or {}).items():
+        content = content.replace("${{{}}}".format(key), value)
 
-    buf = COGITO.cg_buf_build()
-    if COGITO.cg_to_json(buf, ctypes.c_char_p(args.encode("utf-8"))) != 0:
+    buffer = COGITO.cg_buf_build()
+    if COGITO.cg_to_json(buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
         raise CogitoError("JSON conversion failed")
 
-    response = buf.contents.content.decode("utf-8")
-    COGITO.cg_buf_free(buf)
+    response = buffer.contents.content.decode("utf-8")
+    COGITO.cg_buf_free(buffer)
+
     return response
-
-
-class CogitoError(Exception):
-    pass
