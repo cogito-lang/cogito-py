@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import os
 import ctypes
 from ctypes.util import find_library
@@ -22,7 +23,9 @@ if _path is None:
     $ wget 'https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito_0.2.0-1_amd64.deb' -qO $FILE
     $ sudo dpkg -i $FILE && rm $FILE
 """  # noqa
+
     raise NameError(message)
+
 _mod = ctypes.cdll.LoadLibrary(_path)
 
 
@@ -61,9 +64,10 @@ cg_buf_free.restype = None
 
 def to_iam(args):
     buf = cg_buf_build()
-    if cg_to_iam(buf, args) != 0:
+    if cg_to_iam(buf, ctypes.c_char_p(args.encode("utf-8"))) != 0:
         raise CogitoError("IAM conversion failed")
-    response = buf.contents.content
+
+    response = buf.contents.content.decode("utf-8")
     cg_buf_free(buf)
     return response
 
@@ -73,9 +77,10 @@ def to_json(args, subs=None):
         args = args.replace("${{{}}}".format(key), value)
 
     buf = cg_buf_build()
-    if cg_to_json(buf, args) != 0:
+    if cg_to_json(buf, ctypes.c_char_p(args.encode("utf-8"))) != 0:
         raise CogitoError("JSON conversion failed")
-    response = buf.contents.content
+
+    response = buf.contents.content.decode("utf-8")
     cg_buf_free(buf)
     return response
 
