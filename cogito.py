@@ -13,13 +13,13 @@ if _path is None:
         "Please install by running the following steps:\n"
     if os.popen('uname').read().strip() == 'Darwin':
         message += """
-    $ brew tap localytics/formulae
+    $ brew tap cogito-lang/formulae
     $ brew install cogito
 """
     else:
         message += """
     $ FILE=$(mktemp)
-    $ wget 'https://s3.amazonaws.com/public.localytics/artifacts/libcogito_0.2.0-1_amd64.deb' -qO $FILE
+    $ wget 'https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito_0.2.0-1_amd64.deb' -qO $FILE
     $ sudo dpkg -i $FILE && rm $FILE
 """  # noqa
     raise NameError(message)

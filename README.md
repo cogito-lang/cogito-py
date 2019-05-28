@@ -1,9 +1,9 @@
 # cogito-py
 
-[![Build Status](https://travis-ci.org/localytics/cogito-py.svg?branch=master)](https://travis-ci.org/localytics/cogito-py)
+[![Build Status](https://travis-ci.com/cogito-lang/cogito-py.svg?branch=master)](https://travis-ci.com/cogito-lang/cogito-py)
 [![PyPI](https://img.shields.io/pypi/v/cogito.svg)](https://pypi.python.org/pypi/cogito)
 
-A tiny python library that links against [libcogito](https://github.com/localytics/libcogito).
+A tiny python library that links against [libcogito](https://github.com/cogito-lang/libcogito).
 
 ## Usage
 
@@ -50,7 +50,7 @@ twine upload dist/*
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/localytics/cogito-py.
+Bug reports and pull requests are welcome on GitHub at https://github.com/cogito-lang/cogito-py.
 
 ## License
 

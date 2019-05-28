@@ -5,8 +5,8 @@ setup(
     version='0.2.0',
     py_modules=['cogito'],
     description='A tiny python library that links against libcogito',
-    url='https://github.com/localytics/cogito-py',
-    author='Localytics',
-    author_email='oss@localytics.com',
+    url='https://github.com/cogito-lang/cogito-py',
+    author='Kevin Deisz',
+    author_email='kevin.deisz@gmail.com',
     license='MIT'
 )
