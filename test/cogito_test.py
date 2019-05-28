@@ -1,8 +1,10 @@
 import unittest
 import sys
 import os
+
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
+
 import cogito
 
 
@@ -31,5 +33,5 @@ class CogitoCheck(unittest.TestCase):
             cogito.to_iam("bad json")
 
 if __name__ == '__main__':
-    print "Testing cogito at location: {}".format(cogito.__file__)
+    print("Testing cogito at location: {}".format(cogito.__file__))
     unittest.main()
