@@ -4,15 +4,16 @@ import os
 import ctypes
 from ctypes.util import find_library
 
-if os.getenv('COGITO_PATH') is None:
-    _path = find_library('cogito')
+if os.getenv("COGITO_PATH") is None:
+    COGITO_PATH = find_library("cogito")
 else:
-    _path = os.environ['COGITO_PATH']
+    COGITO_PATH = os.environ["COGITO_PATH"]
 
-if _path is None:
+if COGITO_PATH is None:
     message = "libcogito is missing from your system. " \
         "Please install by running the following steps:\n"
-    if os.popen('uname').read().strip() == 'Darwin':
+
+    if os.popen("uname").read().strip() == "Darwin":
         message += """
     $ brew tap cogito-lang/formulae
     $ brew install cogito
@@ -22,7 +23,7 @@ if _path is None:
     $ FILE=$(mktemp)
     $ wget 'https://github.com/cogito-lang/libcogito/releases/download/v0.2.0/libcogito_0.2.0-1_amd64.deb' -qO $FILE
     $ sudo dpkg -i $FILE && rm $FILE
-"""  # noqa
+"""
 
     raise NameError(message)
 
@@ -37,12 +38,12 @@ class CgBuf(ctypes.Structure):
       char *content;
     } cg_buf_t;
     """
-    _fields_ = [('length', ctypes.c_size_t),
-                ('capacity', ctypes.c_size_t),
-                ('content', ctypes.c_char_p), ]
+    _fields_ = [("length", ctypes.c_size_t),
+                ("capacity", ctypes.c_size_t),
+                ("content", ctypes.c_char_p), ]
 
 
-COGITO = ctypes.cdll.LoadLibrary(_path)
+COGITO = ctypes.cdll.LoadLibrary(COGITO_PATH)
 
 # int cg_to_json
 COGITO.cg_to_json.argtypes = (ctypes.POINTER(CgBuf), ctypes.c_char_p)
