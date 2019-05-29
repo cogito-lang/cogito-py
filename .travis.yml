@@ -6,4 +6,4 @@ install:
 - sudo dpkg -i $FILE && rm $FILE
 script:
 - pytest
-- pylint cogito.py
+- pylint *.py

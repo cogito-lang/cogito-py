@@ -18,6 +18,8 @@ if COGITO_PATH is None:
 
 
 class CogitoBuffer(ctypes.Structure):
+    # pylint: disable=too-few-public-methods
+
     """
     A ctypes structure that wraps the cg_buf struct from libcogito
 
