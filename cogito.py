@@ -38,13 +38,40 @@ class CogitoBuffer(ctypes.Structure):
       char *content;
     } cg_buf_t;
     """
-    _fields_ = [("length", ctypes.c_size_t),
-                ("capacity", ctypes.c_size_t),
-                ("content", ctypes.c_char_p), ]
+
+    _fields_ = [
+        ("length", ctypes.c_size_t),
+        ("capacity", ctypes.c_size_t),
+        ("content", ctypes.c_char_p)
+    ]
 
 
 class CogitoError(Exception):
     pass
+
+
+class Cogito:
+    def __init__(self):
+        self.buffer = None
+
+    def __enter__(self):
+        self.buffer = COGITO.cg_buf_build()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        COGITO.cg_buf_free(self.buffer)
+
+    def to_iam(self, content):
+        if COGITO.cg_to_iam(self.buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
+            raise CogitoError("IAM conversion failed")
+
+        return self.buffer.contents.content.decode("utf-8")
+
+    def to_json(self, content):
+        if COGITO.cg_to_json(self.buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
+            raise CogitoError("JSON conversion failed")
+
+        return self.buffer.contents.content.decode("utf-8")
 
 
 COGITO = ctypes.cdll.LoadLibrary(COGITO_PATH)
@@ -67,12 +94,9 @@ COGITO.cg_buf_free.restype = None
 
 
 def to_iam(content):
-    buffer = COGITO.cg_buf_build()
-    if COGITO.cg_to_iam(buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
-        raise CogitoError("IAM conversion failed")
-
-    response = buffer.contents.content.decode("utf-8")
-    COGITO.cg_buf_free(buffer)
+    response = None
+    with Cogito() as cogito:
+        response = cogito.to_iam(content)
 
     return response
 
@@ -81,11 +105,8 @@ def to_json(content, substitutions=None):
     for key, value in (substitutions or {}).items():
         content = content.replace("${{{}}}".format(key), value)
 
-    buffer = COGITO.cg_buf_build()
-    if COGITO.cg_to_json(buffer, ctypes.c_char_p(content.encode("utf-8"))) != 0:
-        raise CogitoError("JSON conversion failed")
-
-    response = buffer.contents.content.decode("utf-8")
-    COGITO.cg_buf_free(buffer)
+    response = None
+    with Cogito() as cogito:
+        response = cogito.to_json(content)
 
     return response
