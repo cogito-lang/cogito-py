@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="cogito",
-    version="0.2.0",
+    version="0.2.1",
     py_modules=["cogito"],
     description="A tiny python library that links against libcogito",
     url="https://github.com/cogito-lang/cogito-py",
