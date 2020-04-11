@@ -1,6 +1,6 @@
 # cogito-py
 
-[![Build Status](https://travis-ci.com/cogito-lang/cogito-py.svg?branch=master)](https://travis-ci.com/cogito-lang/cogito-py)
+[![Build Status](https://github.com/cogito-lang/cogito-py/workflows/Main/badge.svg)](https://github.com/cogito-lang/cogito-py/actions)
 [![PyPI](https://img.shields.io/pypi/v/cogito.svg)](https://pypi.python.org/pypi/cogito)
 
 A tiny python library that links against [libcogito](https://github.com/cogito-lang/libcogito).
